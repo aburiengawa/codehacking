@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests;
 use App\Http\Requests\PostsCreateRequest;
 
-use\App\Category;
+use App\Category;
 use App\Post;
 use App\Photo;
 
@@ -130,5 +130,11 @@ class AdminPostsController extends Controller
         }
         Auth::user()->posts()->whereId($id)->first()->delete();
         return redirect('/admin/posts');
+    }
+
+    public function post($id) {
+        $post = Post::findOrFail($id);
+        $comments = $post->comments()->whereIsActive(1)->get();
+        return view('post', compact('post', 'comments'));
     }
 }
