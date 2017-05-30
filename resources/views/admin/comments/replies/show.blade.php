@@ -1,9 +1,9 @@
 @extends('layouts.admin')
 @section('content')
 
-@if(count($comments) > 0)
+@if(count($replies) > 0 )
 
-<h1>Comments</h1>
+<h1>Replies</h1>
 
 <table class="table">
 	<thead>
@@ -15,23 +15,22 @@
 		</tr>
 	</thead>
 	<tbody>
-
-	@foreach($comments as $comment)
+	
+	@foreach($replies as $reply)
 
 		<tr>
-			<td>{{$comment->id}}</td>
-			<td>{{$comment->author}}</td>
-			<td>{{$comment->email}}</td>
-			<td>{{$comment->body}}</td>
+			<td>{{$reply->id}}</td>
+			<td>{{$reply->author}}</td>
+			<td>{{$reply->email}}</td>
+			<td>{{$reply->body}}</td>
 
-			<td><a href="{{route('home.post', $comment->post->slug)}}">View Post</a></td>
-			<td><a href="{{route('admin.comment.replies.show', $comment->id)}}">View Replies</a></td>
+			<td><a href="{{route('home.post', $reply->comment->post->id)}}">View Post</a></td>
 
 			<td>
 
-				@if($comment->is_active == 0)
+				@if($reply->is_active == 0)
 
-				{!! Form::model($comment, ['method'=>'PATCH', 'action'=>['PostCommentsController@update', $comment->id]]) !!}
+				{!! Form::model($reply, ['method'=>'PATCH', 'action'=>['CommentRepliesController@update', $reply->id]]) !!}
 				
 					<input type="hidden" name="is_active" value="1">
 					<div class="form-group">
@@ -42,7 +41,7 @@
 
 				@else				
 
-				{!! Form::model($comment, ['method'=>'PATCH', 'action'=>['PostCommentsController@update', $comment->id]]) !!}
+				{!! Form::model($reply, ['method'=>'PATCH', 'action'=>['CommentRepliesController@update', $reply->id]]) !!}
 				
 					<input type="hidden" name="is_active" value="0">
 					<div class="form-group">
@@ -57,7 +56,7 @@
 
 			<td>			
 
-				{!! Form::open(['method'=>'DELETE', 'action'=>['PostCommentsController@destroy', $comment->id]]) !!}
+				{!! Form::open(['method'=>'DELETE', 'action'=>['CommentRepliesController@destroy', $reply->id]]) !!}
 				
 					<div class="form-group">
 						{!! Form::submit('Delete', ['class'=>'btn btn-danger']) !!}
@@ -73,10 +72,10 @@
 
 	</tbody>
 </table>
+
 @else
 
-<h1 class="text-center">No comments</h1>
+<h1 class="text-center">No replies</h1>
 
 @endif
-
 @stop
