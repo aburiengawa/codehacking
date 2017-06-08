@@ -39,7 +39,11 @@ class Post extends Model
     }
 
     public function photo() {
-    	return $this->belongsTo('App\Photo');
+        return $this->belongsTo('App\Photo'); 
+    }
+
+    public function photoPlaceholder() {
+        return "http://placehold.it/700x200";
     }    
 
     public function category() {

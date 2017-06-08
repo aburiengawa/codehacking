@@ -48,6 +48,7 @@ Route::group(['middleware'=>'admin'], function() {
 		'edit'=>'admin.categories.edit',
 		'destroy'=>'admin.categories.destroy',
 		]]);
+	Route::post('admin/delete/media', 'AdminMediaController@deleteMedia');
 	Route::resource('admin/media', 'AdminMediaController', ['names'=>[
 		'index'=>'admin.media.index',
 		'create'=>'admin.media.create',
@@ -66,7 +67,7 @@ Route::group(['middleware'=>'admin'], function() {
 		]]);
 	Route::resource('admin/comment/replies', 'CommentRepliesController',['names'=>[
 		'show'=>'admin.replies.comments.replies.show',
-		'createReply'=>'admin.replies.comments.replies.show',
+		'create'=>'admin.replies.comments.replies.create',
 		'index'=>'admin.replies.comments.replies.index',
 		]]);
 });

@@ -26,9 +26,21 @@ class CommentRepliesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         //
+        $user = Auth::user();
+        $data = [
+            'comment_id' => $request->comment_id,
+            'author' => $user->name,
+            'email' => $user->email,
+            'photo_id' => $user->photo->id,
+            'body' => $request->body
+        ];
+
+        CommentReply::create($data);
+        $request->session()->flash('reply_message', 'Your reply has been submitted and is waiting moderation');
+        return redirect()->back();
     }
 
     /**
